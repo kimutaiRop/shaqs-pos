@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('index');
+// });
+
+// Route::get('/menu', function () {
+//     return view('menu');
+// });
+
+// Route::get('/orders', function () {
+//     return view('orders');
+// });
+
+// Route::get('/payments', function () {
+//     return view('payments');
+// });
+
+
+// Route::inertia('/example', 'Example');
+
+Route::get("/", function(){
+    return Inertia::render("Home");
+});
+
+Route::get("/payments", function(){
+    return Inertia::render("Payments");
+});
+Route::get("/menu", function(){
+    return Inertia::render("Menu");
+});
+Route::get("/orders", function(){
+    return Inertia::render("Orders");
+});
+Route::get("/login", function(){
+    return Inertia::render("Login");
 });
