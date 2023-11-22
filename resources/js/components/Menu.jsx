@@ -9,11 +9,16 @@ import { useEffect } from "react";
 const Menu = () => {
     const [menu, setMenu] = React.useState([]);
     useEffect(() => {
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
         let url = "/api/menu";
         if (window.location.search) {
             url += window.location.search;
         }
-        fetch(url)
+        fetch(url, {
+            headers,
+        })
             .then((response) => response.json())
             .then((data) => setMenu(data.data))
             .catch((error) => console.log("error", error));

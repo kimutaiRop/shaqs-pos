@@ -10,6 +10,10 @@ createInertiaApp({
             import.meta.glob("./components/**/*.jsx")
         ),
     setup({ el, App, props }) {
+        let token = localStorage.getItem("token");
+        if (token === null && window.location.pathname != "/auth/login") {
+            window.location.href = "/auth/login";
+        }
         render(<App {...props} />, el);
     },
 });

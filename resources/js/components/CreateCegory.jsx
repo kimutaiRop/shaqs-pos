@@ -12,12 +12,16 @@ export const CreateCegory = () => {
         formdata.append("name", name);
         formdata.append("image", image);
 
+     
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
         var requestOptions = {
             method: "POST",
             body: formdata,
             redirect: "follow",
+            headers,
         };
-
         fetch("/api/menu-category", requestOptions)
             .then((response) => response.text())
             .then((result) => {

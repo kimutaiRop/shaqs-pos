@@ -68,3 +68,5 @@ Route::middleware('auth:api')->post('v1/b2c/simulate',[MpesaController::class,'b
 Route::middleware('auth:api')->post('v1/accountbalance',[MpesaController::class,'accountBalance']);
 
 Route::middleware('auth:api')->post('/v1/transactionStatusCallBack',[MpesaController::class,'transactionStatusCallBack']);
+
+Route::post('/api-login', 'App\Http\Controllers\Auth\LoginController@apiLogin');

@@ -29,11 +29,13 @@ const FinishCheckout = ({ cart, clearCart }) => {
                 id: item.id,
             })),
         };
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
+        
         fetch("/api/orders", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers,
             body: JSON.stringify(data),
         })
             .then(async (res) => {

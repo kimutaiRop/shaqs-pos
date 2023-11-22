@@ -37,11 +37,12 @@ const MpesaUnused = ({ selectPayment, paymentId }) => {
         if (!remove) {
             return;
         }
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
         fetch(url, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers,
             body: JSON.stringify({ status: 1 }),
         })
             .then((response) => response)

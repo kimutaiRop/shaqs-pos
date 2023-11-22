@@ -12,7 +12,13 @@ const Home = () => {
         if (window.location.search) {
             url += window.location.search;
         }
-        fetch(url)
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
+        fetch(url, {
+            method: "GET",
+            headers: headers,
+        })
             .then((response) => response.json())
             .then((data) => setMenu(data.data))
             .catch((error) => console.log("error", error));

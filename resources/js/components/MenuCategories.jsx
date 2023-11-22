@@ -6,7 +6,12 @@ const MenuCategories = () => {
     let activeCategory = searchParams.get("category_id");
 
     useEffect(() => {
-        fetch("/api/menu-category")
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
+        fetch("/api/menu-category", {
+            headers,
+        })
             .then((response) => response.json())
             .then((data) => {
                 setCategories(data.data);

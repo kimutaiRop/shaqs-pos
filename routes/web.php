@@ -53,7 +53,7 @@ Route::get("/orders", function(){
 });
 
 Auth::routes();
-Route::get("/login", function(){
+Route::get("/auth/login", function(){
     return Inertia::render("Login");
 });
 

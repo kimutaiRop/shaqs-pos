@@ -16,7 +16,15 @@ const Orders = () => {
         } else {
             url += `?date=${format(new Date(), "yyyy-MM-dd")}`;
         }
-        fetch(url)
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append(
+            "Authorization",
+            `Bearer ${localStorage.getItem("token")}`
+        );
+        fetch(url, {
+            headers,
+        })
             .then((res) => res.json())
             .then((data) => setOrders(data.data));
     }, []);
