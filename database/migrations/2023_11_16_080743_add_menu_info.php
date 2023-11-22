@@ -26,6 +26,13 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        // drop menu name, price, category, description and image
+        Schema::table('menus', function (Blueprint $table) {
+            $table->dropColumn('name');
+            $table->dropColumn('price');
+            $table->dropColumn('category_id');
+            $table->dropColumn('description');
+            $table->dropColumn('image');
+        });
     }
 };

@@ -137,6 +137,8 @@ class MpesaController extends Controller
         $payment->order_id = null;
         $payment->total = $content['Body']['stkCallback']['CallbackMetadata']['Item'][0]['Value'];
         $payment->status = 0;
+        $payment->method = 'MPESA';
+        $payment->payer_phone = "+".$content['Body']['stkCallback']['CallbackMetadata']['Item'][4]['Value'];
         $payment->transaction_id = $content['Body']['stkCallback']['CallbackMetadata']['Item'][1]['Value'];
         $payment->save();
         
@@ -220,30 +222,23 @@ class MpesaController extends Controller
         $mpesa_transaction->ThirdPartyTransID = $content->ThirdPartyTransID;
         $mpesa_transaction->MSISDN = $content->MSISDN;
         $mpesa_transaction->FirstName = $content->FirstName;
-        $mpesa_transaction->MiddleName = $content->MiddleName;
-        $mpesa_transaction->LastName = $content->LastName;
+        // $mpesa_transaction->MiddleName = $content->MiddleName;
+        // $mpesa_transaction->LastName = $content->LastName;
         $mpesa_transaction->save();
 
-        $LastRecord = DB::table('mobile_payments')->orderBy('transLoID','desc')->first();
-        if(Auth::user()){
+        // create payments
+        $payment  = new Payments;
+        $payment->order_id = null;
+        $payment->total = $content->TransAmount;
+        $payment->status = 0;
+        $payment->method = 'MPESA';
+        $payment->payer_name = $content->FirstName;
+        $payment->payer_phone = $content->MSISDN;
+        $payment->transaction_id = $content->TransID;
+        $payment->save();
 
-                $updateDetails = array(
-                    'user_id' => Auth::user()->id,
-                );
-                DB::table('mobile_payments')->where('transLoID',$LastRecord->transLoID)->update($updateDetails);
-
-        }else{
-
-                $updateDetails = array(
-                    'user_id' => $content->BillRefNumber,
-                );
-                DB::table('mobile_payments')->where('transLoID',$LastRecord->transLoID)->update($updateDetails);
-
-        }
-
-
-        // Log To Laravel LOgs
-        activity()->log('C2B Payment Has Been Made');
+        
+        // activity()->log('C2B Payment Has Been Made');
 
 
         // Responding to the confirmation request
@@ -268,8 +263,8 @@ class MpesaController extends Controller
         curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode(array(
             'ShortCode' => "603021",
             'ResponseType' => 'Completed',
-            'ConfirmationURL' => "https://f384-197-237-51-205.ngrok-free.app/api/v1/transaction/confirmation",
-            'ValidationURL' => "https://f384-197-237-51-205.ngrok-free.app/api/v1/validation"
+            'ConfirmationURL' => "https://27ea-197-237-2-31.ngrok-free.app/api/v1/transaction/confirmation",
+            'ValidationURL' => "https://27ea-197-237-2-31.ngrok-free.app/api/v1/validation"
         )));
         $curl_response = curl_exec($curl);
         echo $curl_response;
@@ -285,8 +280,8 @@ class MpesaController extends Controller
         $PartyA =  '603021';
         $PartyB =  '254708374149';
         $Remarks =  'Remarks';
-        $QueueTimeOutURL =  'https://f384-197-237-51-205.ngrok-free.app/api/v1/b2c/callbacks';
-        $ResultURL =  'https://f384-197-237-51-205.ngrok-free.app/api/v1/b2c/callbacks';
+        $QueueTimeOutURL =  'https://27ea-197-237-2-31.ngrok-free.app/api/v1/b2c/callbacks';
+        $ResultURL =  'https://27ea-197-237-2-31.ngrok-free.app/api/v1/b2c/callbacks';
         $Occasion =  'Optionally';
         //
         $url = 'https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest';
@@ -344,8 +339,8 @@ class MpesaController extends Controller
         $PartyA =  '603021';
         $PartyB =  '600000';
         $Remarks =  'Remarks';
-        $QueueTimeOutURL =  'https://f384-197-237-51-205.ngrok-free.app/api/v1/b2b/callbacks';
-        $ResultURL =  'https://f384-197-237-51-205.ngrok-free.app/api/v1/b2b/callbacks';
+        $QueueTimeOutURL =  'https://27ea-197-237-2-31.ngrok-free.app/api/v1/b2b/callbacks';
+        $ResultURL =  'https://27ea-197-237-2-31.ngrok-free.app/api/v1/b2b/callbacks';
         $Occasion =  'Optionally';
         //
         $url = 'https://sandbox.safaricom.co.ke/mpesa/b2b/v1/paymentrequest';
@@ -410,8 +405,8 @@ class MpesaController extends Controller
         $PartyA =  '603021';
         $Remarks =  'Remarks';
         $IdentifierType = '4';
-        $QueueTimeOutURL =  'https://f384-197-237-51-205.ngrok-free.app/api/v1/balance/callbacks';
-        $ResultURL =  'https://f384-197-237-51-205.ngrok-free.app/api/v1/balance/callbacks';
+        $QueueTimeOutURL =  'https://27ea-197-237-2-31.ngrok-free.app/api/v1/balance/callbacks';
+        $ResultURL =  'https://27ea-197-237-2-31.ngrok-free.app/api/v1/balance/callbacks';
         //
         $url = 'https://sandbox.safaricom.co.ke/mpesa/accountbalance/v1/query';
         $curl = curl_init();
@@ -516,8 +511,8 @@ class MpesaController extends Controller
         $transaction = 'PDE81HISMM';
         $IdentifierType = '4';
         $Occasion =  'Occasion';
-        $QueueTimeOutURL =  'https://f384-197-237-51-205.ngrok-free.app/api/v1/transactionStatusCallBack';
-        $ResultURL =  'https://f384-197-237-51-205.ngrok-free.app/api/v1/transactionStatusCallBack';
+        $QueueTimeOutURL =  'https://27ea-197-237-2-31.ngrok-free.app/api/v1/transactionStatusCallBack';
+        $ResultURL =  'https://27ea-197-237-2-31.ngrok-free.app/api/v1/transactionStatusCallBack';
         //
         $url = 'https://sandbox.safaricom.co.ke/mpesa/transactionstatus/v1/query';
         $curl = curl_init();
@@ -583,8 +578,8 @@ class MpesaController extends Controller
         $Remarks =  'Remarks';
         $IdentifierType = '11';
         $Occasion =  'Occasion';
-        $QueueTimeOutURL =  'https://f384-197-237-51-205.ngrok-free.app/api/v1/reverse/request/callback';
-        $ResultURL =  'https://f384-197-237-51-205.ngrok-free.app/api/v1/reverse/request/callback';
+        $QueueTimeOutURL =  'https://27ea-197-237-2-31.ngrok-free.app/api/v1/reverse/request/callback';
+        $ResultURL =  'https://27ea-197-237-2-31.ngrok-free.app/api/v1/reverse/request/callback';
         //
         $url = 'https://sandbox.safaricom.co.ke/mpesa/reversal/v1/request';
         $curl = curl_init();
@@ -890,8 +885,8 @@ class MpesaController extends Controller
         $PartyA =  '603021';
         $Remarks =  'Remarks';
         $IdentifierType = '4';
-        $QueueTimeOutURL =  'https://f384-197-237-51-205.ngrok-free.app/api/v1/balance/callbacks';
-        $ResultURL =  'https://f384-197-237-51-205.ngrok-free.app/api/v1/balance/callbacks';
+        $QueueTimeOutURL =  'https://27ea-197-237-2-31.ngrok-free.app/api/v1/balance/callbacks';
+        $ResultURL =  'https://27ea-197-237-2-31.ngrok-free.app/api/v1/balance/callbacks';
         //
         $url = 'https://sandbox.safaricom.co.ke/mpesa/accountbalance/v1/query';
         $curl = curl_init();

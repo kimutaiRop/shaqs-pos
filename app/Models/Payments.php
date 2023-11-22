@@ -20,6 +20,8 @@ class Payments extends Model
         'total',
         'status',
         "transaction_id",
+        "method",
+        "payer_name"
 
     ];
 

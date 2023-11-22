@@ -32,20 +32,35 @@ use Inertia\Inertia;
 
 
 // Route::inertia('/example', 'Example');
-
+Auth::routes();
 Route::get("/", function(){
     return Inertia::render("Home");
 });
 
+Auth::routes();
 Route::get("/payments", function(){
     return Inertia::render("Payments");
 });
+
+Auth::routes();
 Route::get("/menu", function(){
     return Inertia::render("Menu");
 });
+
+Auth::routes();
 Route::get("/orders", function(){
     return Inertia::render("Orders");
 });
+
+Auth::routes();
 Route::get("/login", function(){
     return Inertia::render("Login");
 });
+
+Auth::routes();
+Route::get("/customer-menu", function(){
+    return Inertia::render("CustomerMenu");
+});
+
+Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -2,14 +2,27 @@ import React from "react";
 import Sidebar from "./Sidebar";
 import Calendar from "./Calendar";
 import { formatAmount } from "../helper";
+import { format } from "date-fns";
 
 const Payments = () => {
+    let searchParams = new URLSearchParams(window.location.search);
+    let date = searchParams.get("date");
     return (
         <div className="grid grid-cols-7 h-screen w-full">
             <Sidebar />
             <main className="bg-primary w-full col-span-6 h-full grid grid-cols-9">
                 <div className="col-span-3 bg-secondary">
-                    <Calendar />
+                    <Calendar
+                        onDateChange={(date) => {
+                            console.log(date);
+                            // add ?date=2021-09-01 to the URL
+                            window.location.href = `/payments?date=${format(
+                                date,
+                                "yyyy-MM-dd"
+                            )}`;
+                        }}
+                        selected={new Date(date || "").setHours(0, 0, 0, 0)}
+                    />
                 </div>
                 <div className="col-span-6  w-full flex flex-col  p-2 space-y-2">
                     <div className="flex bg-secondary py-4 justify-between items-center px-3 border rounded">

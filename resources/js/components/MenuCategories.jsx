@@ -9,7 +9,6 @@ const MenuCategories = () => {
         fetch("/api/menu-category")
             .then((response) => response.json())
             .then((data) => {
-                console.log(data.data);
                 setCategories(data.data);
             });
     }, []);

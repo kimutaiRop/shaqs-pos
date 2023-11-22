@@ -8,11 +8,11 @@ class CreateOrderMenuTable extends Migration
 {
     public function up()
     {
-        Schema::create('order_menu', function (Blueprint $table) {
+        Schema::create('order_menus', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('menu_id');
-            $table->integer('quantity'); // You may want to store the quantity of each menu item in an order
+            $table->integer('quantity');
             $table->timestamps();
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
@@ -22,6 +22,6 @@ class CreateOrderMenuTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('order_menu');
+        Schema::dropIfExists('order_menus');
     }
 }

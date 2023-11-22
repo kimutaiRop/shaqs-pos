@@ -1,26 +1,48 @@
 import React from "react";
 import Dialog from "./Dialog";
 import { formatAmount } from "../helper";
+import MpesaUnused from "./MpesaUnused";
 
-const FinishCheckout = ({ cart }) => {
+const FinishCheckout = ({ cart, clearCart }) => {
     const [show, setShow] = React.useState(false);
     const [showCash, setShowCash] = React.useState(false);
     const [cashAmount, setCashAmount] = React.useState(0);
     const [serveType, setType] = React.useState("");
+    const [paymentId, setPaymentId] = React.useState(0);
+    const [selectedPayament, setSelectedPayment] = React.useState(null);
     const data = {
         cashier: "John Doe",
         orderNumber: 1,
     };
     const printRef = React.useRef(null);
     const printReceipt = () => {
-        // get the element and print with styles
-        const printContents = printRef.current.innerHTML;
-        const originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
+        let conf = confirm("Are you sure you want to print this receipt?");
+        if (!conf) {
+            return;
+        }
+        let data = {
+            method: cashAmount > 0 ? "CASH" : "MPESA",
+            cashAmount,
+            paymentId: paymentId,
+            menus: cart.map((item) => ({
+                quantity: item.quantity,
+                id: item.id,
+            })),
+        };
+        fetch("/api/orders", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+            .then(async (res) => {
+                clearCart();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
-    console.log(cart);
     return (
         <>
             <form
@@ -129,7 +151,9 @@ const FinishCheckout = ({ cart }) => {
                                                     <span>Payment</span>
                                                     <span>
                                                         {formatAmount(
-                                                            cashAmount || 0.0
+                                                            paymentId
+                                                                ? selectedPayament.total
+                                                                : cashAmount
                                                         )}
                                                     </span>
                                                 </div>
@@ -137,8 +161,10 @@ const FinishCheckout = ({ cart }) => {
                                                     <span>Change Due</span>
                                                     <span>
                                                         {formatAmount(
-                                                            (cashAmount ||
-                                                                0.0) -
+                                                            (paymentId
+                                                                ? selectedPayament.total
+                                                                : cashAmount ||
+                                                                  0.0) -
                                                                 cart.reduce(
                                                                     (a, b) =>
                                                                         a +
@@ -152,9 +178,9 @@ const FinishCheckout = ({ cart }) => {
                                                 <div className="w-full items-center justify-center">
                                                     <h2 className="py-2 uppercase font-semibold">
                                                         Method:{" "}
-                                                        {cashAmount > 0
-                                                            ? "CASH"
-                                                            : "MPESA"}
+                                                        {paymentId
+                                                            ? "MPESA"
+                                                            : "CASH"}
                                                     </h2>
                                                 </div>
                                                 <div className="border-b-2 border-dashed border-black pt-10" />
@@ -186,21 +212,22 @@ const FinishCheckout = ({ cart }) => {
                                         </div>
                                     </div>
                                 </div>
-                                {cashAmount > 0 &&
-                                    cashAmount >=
-                                        cart.reduce(
-                                            (a, b) => a + b.price * b.quantity,
-                                            0
-                                        ) && (
-                                        <button
-                                            onClick={printReceipt}
-                                            className="absolute left-2 bottom-2 bg-accent px-5 shadow rounded py-1.5"
-                                        >
-                                            print
-                                        </button>
-                                    )}
+                                {(paymentId
+                                    ? selectedPayament.total
+                                    : cashAmount) >=
+                                    cart.reduce(
+                                        (a, b) => a + b.price * b.quantity,
+                                        0
+                                    ) && (
+                                    <button
+                                        onClick={printReceipt}
+                                        className="absolute left-2 bottom-2 bg-accent px-5 shadow rounded py-1.5"
+                                    >
+                                        print
+                                    </button>
+                                )}
                             </div>
-                            <div className="col-span-2 h-full">
+                            <div className="col-span-2 h-full flex flex-col overflow-auto">
                                 <div className="p-2 flex justify-between items-center">
                                     <h2 className="h-4 capitalize font-bold text-xl">
                                         Unused Payments
@@ -231,11 +258,12 @@ const FinishCheckout = ({ cart }) => {
                                                         Received Amount
                                                     </label>
                                                     <input
-                                                        onChange={(e) =>
+                                                        onChange={(e) => {
                                                             setCashAmount(
                                                                 e.target.value
-                                                            )
-                                                        }
+                                                            );
+                                                            setPaymentId(null);
+                                                        }}
                                                         type="number"
                                                         className="border-2 border-black w-full rounded py-2 px-5"
                                                     />
@@ -247,6 +275,14 @@ const FinishCheckout = ({ cart }) => {
                                         </Dialog>
                                     )}
                                 </div>
+                                <MpesaUnused
+                                    selectPayment={(payment) => {
+                                        setSelectedPayment(payment);
+                                        setPaymentId(payment?.id);
+                                        setCashAmount(0);
+                                    }}
+                                    paymentId={paymentId}
+                                />
                             </div>
                         </div>
                     </div>

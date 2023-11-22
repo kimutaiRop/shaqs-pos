@@ -26,6 +26,9 @@ const Calendar = ({ onDateChange, selected }) => {
         end: endOfMonth(firstDayCurrentMonth),
     });
 
+    console.log(isEqual(new Date(), selected))
+    console.log(selected)
+
     function previousMonth() {
         let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
         setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
@@ -115,7 +118,7 @@ const Calendar = ({ onDateChange, selected }) => {
                                     onDateChange(day);
                                 }}
                                 className={classNames(
-                                    isEqual(day, selected) && "text-accentText",
+                                    isEqual(day, selected) && "text-white",
                                     !isEqual(day, selected) &&
                                         isToday(day) &&
                                         "text-accent",
@@ -125,7 +128,7 @@ const Calendar = ({ onDateChange, selected }) => {
                                             day,
                                             firstDayCurrentMonth
                                         ) &&
-                                        "text-primaryText",
+                                        "text-black",
                                     !isEqual(day, selected) &&
                                         !isToday(day) &&
                                         !isSameMonth(
@@ -140,7 +143,7 @@ const Calendar = ({ onDateChange, selected }) => {
                                         !isToday(day) &&
                                         "bg-accent",
                                     !isEqual(day, selected) &&
-                                        "hover:bg-accent hover:text-accentText",
+                                        "hover:bg-accent hover:text-white",
                                     (isEqual(day, selected) || isToday(day)) &&
                                         "font-semibold",
                                     "mx-auto flex h-9 w-9 items-center justify-center rounded-full text-base lg:h-8 lg:w-8 xl:h-10 xl:w-10 2xl:text-lg"

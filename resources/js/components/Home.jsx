@@ -91,14 +91,10 @@ const Home = () => {
     };
 
     const getCartegoryName = (menu) => {
-        console.log(window.location.search);
         // if no category_id in query string, return
         if (!window.location.search) {
             return "All Menu";
         }
-
-        // else return category.name for first item in menu
-        console.log(menu);
         return menu[0]?.category?.name;
     };
 
@@ -156,13 +152,13 @@ const Home = () => {
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         fill="none"
                                                         viewBox="0 0 24 24"
-                                                        stroke-width="1.5"
+                                                        strokeWidth="1.5"
                                                         stroke="currentColor"
                                                         className="w-6 h-6"
                                                     >
                                                         <path
-                                                            stroke-linecap="round"
-                                                            stroke-linejoin="round"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
                                                             d="M18 12H6"
                                                         />
                                                     </svg>
@@ -180,13 +176,13 @@ const Home = () => {
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         fill="none"
                                                         viewBox="0 0 24 24"
-                                                        stroke-width="1.5"
+                                                        strokeWidth="1.5"
                                                         stroke="currentColor"
                                                         className="w-6 h-6"
                                                     >
                                                         <path
-                                                            stroke-linecap="round"
-                                                            stroke-linejoin="round"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
                                                             d="M12 6v12m6-6H6"
                                                         />
                                                     </svg>
@@ -203,6 +199,10 @@ const Home = () => {
                         findCartQuantity={findCartQuantity}
                         removeFromCart={removeFromCart}
                         cart={cart}
+                        clearCart={() => {
+                            localStorage.setItem("cart", JSON.stringify([]));
+                            setCart([]);
+                        }}
                     />
                 </div>
             </main>
