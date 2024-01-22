@@ -16,14 +16,22 @@ export const AddDish = () => {
         formData.append("image", image);
         formData.append("category_id", category_id);
 
+        let headers = new Headers();
+        headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
+
         fetch("/api/menu", {
             method: "POST",
             body: formData,
+            headers: headers,
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
-                setShow(false);
+                // wait 2 seconds before closing the dialog
+                setTimeout(() => {
+                    setShow(false);
+                    // reload the page
+                    window.location.reload();
+                }, 2000);
             })
             .catch((error) => console.log("error", error));
     };
@@ -96,7 +104,7 @@ export const AddDish = () => {
                             </div>
                             <div className="w-full">
                                 <button className="w-full bg-accent rounded p-2">
-                                    Add Category
+                                    Add Dish
                                 </button>
                             </div>
                         </form>

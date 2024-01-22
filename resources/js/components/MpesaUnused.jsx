@@ -6,8 +6,15 @@ const MpesaUnused = ({ selectPayment, paymentId }) => {
     const [fetchedPayments, setFetchedPayments] = useState([]);
 
     const getData = () => {
+        let headers = new Headers();
+
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
         let url = `/api/payments?status=0&method=MPESA`;
-        fetch(url)
+        fetch(url, {
+            method: "GET",
+            headers,
+        })
             .then((response) => response.json())
             .then((data) => {
                 setFetchedPayments(data.data);

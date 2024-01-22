@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import Calendar from "./Calendar";
 import { formatAmount } from "../helper";
@@ -6,7 +6,37 @@ import { format } from "date-fns";
 
 const Payments = () => {
     let searchParams = new URLSearchParams(window.location.search);
+    let headers = new Headers();
+
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
     let date = searchParams.get("date");
+    const [payments, setPayments] = React.useState([]);
+    const [fetchedPayments, setFetchedPayments] = useState([]);
+
+    const getData = () => {
+        let url = `/api/payments` + (date ? `?date=${date}` : "");
+        fetch(url, {
+            method: "GET",
+            headers: headers,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setFetchedPayments(data.data);
+            });
+    };
+
+    useEffect(() => {
+        getData();
+
+        const intervalId = setInterval(() => {
+            getData();
+        }, 10000);
+
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, []); // Only run once on mount
     return (
         <div className="grid grid-cols-7 h-screen w-full">
             <Sidebar />
@@ -37,12 +67,32 @@ const Payments = () => {
                         <span>DATE</span>
                         <span>AMOUNT</span>
                     </div>
-                    <div className="grid grid-cols-5 px-2">
-                        <span>TXN0001</span>
-                        <span>031</span>
-                        <span>m-pesa</span>
-                        <span>{new Date().toDateString()}</span>
-                        <span>{formatAmount(1000)}</span>
+                    <div className="w-full">
+                        {fetchedPayments &&
+                            fetchedPayments.map((payment) => (
+                                <div
+                                    key={payment.id}
+                                    className="grid grid-cols-5 justify-between items-center px-5 py-3 bg-gray-100 rounded-md"
+                                >
+                                    <div className="">
+                                        {payment.transaction_id}
+                                    </div>
+                                    <span className="font-bold text-sm col-span-1">
+                                        {payment.order_id}
+                                    </span>{" "}
+                                    <span className="font-bold text-sm col-span-1">
+                                        {payment.method || " Customer"}
+                                    </span>
+                                    <span className="font-bold text-sm col-span-1">
+                                        {new Date(
+                                            payment.created_at
+                                        ).toDateString()}
+                                    </span>
+                                    <span className="font-bold text-sm col-span-1">
+                                        {formatAmount(payment.total)}
+                                    </span>{" "}
+                                </div>
+                            ))}
                     </div>
                 </div>
             </main>

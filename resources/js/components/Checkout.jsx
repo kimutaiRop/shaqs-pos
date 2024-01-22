@@ -20,7 +20,7 @@ const Checkout = ({ cart, findCartQuantity, removeFromCart, clearCart }) => {
                         className="flex space-x-2 p-2 rounded items-center justify-center h-full"
                     >
                         <div className="h-20 bg-primary justify-center items-center flex w-1/5 aspect-square rounded overflow-hidden">
-                            <img src="https://dub01pap001files.storage.live.com/y4mh6bWxGFwvL_7HGqwhBtCJ6nKW2VQ1S3h_4IDXwdOL-0nbWzX5FZ1OdiYB356j8ugyY6ev4M7NqwJmlIMtPvYvjJsKIcVpWsGk8MB9reDLSlhhNbkJ8MHaQFsKZwydCb0tc_1btFK3h6MDu3ohDLt9FUNraXHOtXrNRUwESg6wq50gu8tLqB27ezbPkx36K5iu73tC0euQubVsrb26MwClw?encodeFailures=1&width=931&height=931" />
+                            <img src={item.image} />
                         </div>
                         <div className="w-2/5 flex flex-col p-1 h-full">
                             <h2 className="text-sm font-bold ">{item.name}</h2>

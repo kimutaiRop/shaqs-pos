@@ -10,7 +10,15 @@ const CustomerMenu = () => {
         if (category_id) {
             url += `?category_id=${category_id}`;
         }
-        fetch(url)
+        let headers = new Headers();
+        headers.append(
+            "Authorization",
+            `Bearer ${localStorage.getItem("token")}`
+        );
+        fetch(url, {
+            method: "GET",
+            headers: headers,
+        })
             .then((response) => response.json())
             .then((data) => setMenu(data.data))
             .catch((error) => console.log("error", error));
@@ -23,7 +31,15 @@ const CustomerMenu = () => {
 
     useEffect(() => {
         let url = "/api/menu-category";
-        fetch(url)
+        let headers = new Headers();
+        headers.append(
+            "Authorization",
+            `Bearer ${localStorage.getItem("token")}`
+        );
+        fetch(url, {
+            method: "GET",
+            headers: headers,
+        })
             .then((response) => response.json())
             .then((data) => setCategories(data.data))
             .catch((error) => console.log("error", error));

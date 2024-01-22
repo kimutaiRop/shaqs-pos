@@ -34,7 +34,13 @@ class MenuCategoryController extends Controller
         $path = 'uploads/categories';
         $name = $request->input('name');
         $file = $request->file('image');
-        $filename = str_replace(' ', '', $file->getClientOriginalName());
+        $filename='';
+
+        if ($request->hasFile('image'))
+        {
+            $filename = str_replace(' ', '', $file->getClientOriginalName());
+        }
+        
         $timestamp = new Datetime();
         $new_timestamp = $timestamp->format('Y-m-d H:i:s');
         $image_main_temp = $new_timestamp.'image'.$filename;
