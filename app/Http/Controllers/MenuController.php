@@ -89,15 +89,48 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
-        //
+        
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMenuRequest $request, Menu $menu)
+    public function update(UpdateMenuRequest $request, $id)
     {
-        //
+        $path = 'uploads/menus';
+        $file = $request->file('image');
+        
+        $name = $request->name;
+        $price = $request->price;
+        $category_id = $request->category_id;
+        $description = $request->description;
+        $public_url = Menu::find($id)->image;
+
+        // if file is present
+        if(isset($file)){
+            $filename = str_replace(' ', '', $file->getClientOriginalName());
+            $timestamp = new Datetime();
+            $new_timestamp = $timestamp->format('Y-m-d H:i:s');
+            $image_main_temp = $new_timestamp.'image'.$filename;
+            $image = str_replace(' ', '',$image_main_temp);
+            $file->move($path, $image);
+    
+            $public_url = $path.'/'.$image;
+        }
+        $data = [
+            'name' => $name,
+            'price' => $price,
+            'category_id' => $category_id,
+            "description" => $description,
+            "image" => $public_url
+        ];
+
+        Menu::where('id', $id)->update($data);
+        return response()->json([
+            'status' => 'success',
+            'data' => $data
+        ], 200);
     }
 
     /**

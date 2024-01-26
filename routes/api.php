@@ -34,7 +34,7 @@ Route::middleware('auth:api')->delete('/payments/{id}', 'App\Http\Controllers\Pa
 // api route for menu
 Route::middleware('auth:api')->get('/menu', 'App\Http\Controllers\MenuController@index');
 Route::middleware('auth:api')->post('/menu', 'App\Http\Controllers\MenuController@store');
-Route::middleware('auth:api')->put('/menu/{id}', 'App\Http\Controllers\MenuController@update');
+Route::middleware('auth:api')->post('/menu/{id}', 'App\Http\Controllers\MenuController@update');
 Route::middleware('auth:api')->delete('/menu/{id}', 'App\Http\Controllers\MenuController@destroy');
 
 // api route for user76

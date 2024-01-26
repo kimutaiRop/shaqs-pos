@@ -6,8 +6,7 @@ export const EditDish = ({ dish,setEditItem }) => {
 
     const createDish = (e) => {
         e.preventDefault();
-        const search_params = new URLSearchParams(window.location.search);
-        const category_id = search_params.get("category_id");
+        const category_id = dish.category_id;
         const formData = new FormData();
         formData.append("name", e.target.name.value);
         formData.append("price", e.target.price.value);
@@ -22,7 +21,7 @@ export const EditDish = ({ dish,setEditItem }) => {
         );
 
         fetch("/api/menu/"+dish.id, {
-            method: "PUT",
+            method: "POST",
             body: formData,
             headers: headers,
         })
@@ -57,6 +56,7 @@ export const EditDish = ({ dish,setEditItem }) => {
                             className="w-full border-2 border-black/70 rounded p-2"
                         />
                     </div>
+                    <></>
                     <div className="flex flex-col space-y-1">
                         <label className="">Dish Price</label>
                         <input

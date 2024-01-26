@@ -14,7 +14,10 @@ const Home = () => {
         }
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
-        headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
+        headers.append(
+            "Authorization",
+            `Bearer ${localStorage.getItem("token")}`
+        );
         fetch(url, {
             method: "GET",
             headers: headers,
@@ -126,8 +129,9 @@ const Home = () => {
                                     >
                                         <div className="border border-accent aspect-[9/6] rounded-xl flex flex-col justify-between items-center py-2">
                                             <div className="relative w-full">
-                                                <div className="absolute -top-6 -left-4 aspect-square w-3/5">
+                                                <div className="absolute -top-6 -left-4 aspect-square w-3/5 flex flex-col ">
                                                     <img
+                                                        className=" object-cover aspect-square w-10/12  object-center"
                                                         src={`${item.image}`}
                                                     />
                                                 </div>
