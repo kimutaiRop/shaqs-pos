@@ -1,0 +1,207 @@
+{
+  "resources/js/app.css": {
+    "file": "assets/app-f9296069.css",
+    "src": "resources/js/app.css"
+  },
+  "resources/js/components/Login.jsx": {
+    "file": "assets/Login-b831b360.js",
+    "src": "resources/js/components/Login.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "_helper-76ebf62d.js": {
+    "file": "assets/helper-76ebf62d.js"
+  },
+  "resources/js/components/Menu.jsx": {
+    "file": "assets/Menu-6ef748c0.js",
+    "src": "resources/js/components/Menu.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "resources/js/components/Sidebar.jsx",
+      "_helper-76ebf62d.js",
+      "resources/js/components/CreateCegory.jsx",
+      "resources/js/components/AddDish.jsx",
+      "resources/js/components/MenuCategories.jsx",
+      "resources/js/components/EditDish.jsx",
+      "resources/js/components/Dialog.jsx"
+    ]
+  },
+  "resources/js/components/Sidebar.jsx": {
+    "file": "assets/Sidebar-6152b741.js",
+    "src": "resources/js/components/Sidebar.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "resources/js/components/CustomerMenu.jsx": {
+    "file": "assets/CustomerMenu-35c41cf2.js",
+    "src": "resources/js/components/CustomerMenu.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_helper-76ebf62d.js"
+    ]
+  },
+  "resources/js/components/AddDish.jsx": {
+    "file": "assets/AddDish-00755e98.js",
+    "src": "resources/js/components/AddDish.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "resources/js/components/Dialog.jsx"
+    ]
+  },
+  "resources/js/components/CreateCegory.jsx": {
+    "file": "assets/CreateCegory-1e606122.js",
+    "src": "resources/js/components/CreateCegory.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "resources/js/components/Dialog.jsx"
+    ]
+  },
+  "resources/js/components/EditDish.jsx": {
+    "file": "assets/EditDish-2debd376.js",
+    "src": "resources/js/components/EditDish.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "resources/js/components/Dialog.jsx"
+    ]
+  },
+  "resources/js/components/MenuCategories.jsx": {
+    "file": "assets/MenuCategories-46ea2b04.js",
+    "src": "resources/js/components/MenuCategories.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "resources/js/components/MpesaUnused.jsx": {
+    "file": "assets/MpesaUnused-7ae2e76a.js",
+    "src": "resources/js/components/MpesaUnused.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_helper-76ebf62d.js"
+    ]
+  },
+  "resources/js/components/Receipt.jsx": {
+    "file": "assets/Receipt-5c1dfb90.js",
+    "src": "resources/js/components/Receipt.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_helper-76ebf62d.js"
+    ]
+  },
+  "resources/js/components/Home.jsx": {
+    "file": "assets/Home-573bc2c6.js",
+    "src": "resources/js/components/Home.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "resources/js/components/Sidebar.jsx",
+      "_helper-76ebf62d.js",
+      "resources/js/components/Checkout.jsx",
+      "resources/js/components/MenuCategories.jsx",
+      "resources/js/components/FinishCheckout.jsx",
+      "resources/js/components/Dialog.jsx",
+      "resources/js/components/MpesaUnused.jsx",
+      "resources/js/components/Receipt.jsx"
+    ]
+  },
+  "resources/js/components/Checkout.jsx": {
+    "file": "assets/Checkout-9a44c335.js",
+    "src": "resources/js/components/Checkout.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_helper-76ebf62d.js",
+      "resources/js/components/FinishCheckout.jsx",
+      "resources/js/components/Dialog.jsx",
+      "resources/js/components/MpesaUnused.jsx",
+      "resources/js/components/Receipt.jsx"
+    ]
+  },
+  "resources/js/components/Payments.jsx": {
+    "file": "assets/Payments-b3f2d8b8.js",
+    "src": "resources/js/components/Payments.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "resources/js/components/Sidebar.jsx",
+      "_Calendar-fa08e258.js",
+      "_helper-76ebf62d.js"
+    ]
+  },
+  "resources/js/components/Orders.jsx": {
+    "file": "assets/Orders-0306dfe6.js",
+    "src": "resources/js/components/Orders.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "resources/js/components/Sidebar.jsx",
+      "_Calendar-fa08e258.js",
+      "_helper-76ebf62d.js"
+    ]
+  },
+  "resources/js/components/Dialog.jsx": {
+    "file": "assets/Dialog-9f8d7ad9.js",
+    "src": "resources/js/components/Dialog.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "resources/js/components/FinishCheckout.jsx": {
+    "file": "assets/FinishCheckout-e3e7f23e.js",
+    "src": "resources/js/components/FinishCheckout.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "resources/js/components/Dialog.jsx",
+      "resources/js/components/MpesaUnused.jsx",
+      "resources/js/components/Receipt.jsx",
+      "_helper-76ebf62d.js"
+    ]
+  },
+  "_Calendar-fa08e258.js": {
+    "file": "assets/Calendar-fa08e258.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "resources/js/app.jsx": {
+    "file": "assets/app-d2b2c7d6.js",
+    "src": "resources/js/app.jsx",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/components/AddDish.jsx",
+      "_Calendar-fa08e258.js",
+      "resources/js/components/Checkout.jsx",
+      "resources/js/components/CreateCegory.jsx",
+      "resources/js/components/CustomerMenu.jsx",
+      "resources/js/components/Dialog.jsx",
+      "resources/js/components/EditDish.jsx",
+      "resources/js/components/FinishCheckout.jsx",
+      "resources/js/components/Home.jsx",
+      "resources/js/components/Login.jsx",
+      "resources/js/components/Menu.jsx",
+      "resources/js/components/MenuCategories.jsx",
+      "resources/js/components/MpesaUnused.jsx",
+      "resources/js/components/Orders.jsx",
+      "resources/js/components/Payments.jsx",
+      "resources/js/components/Receipt.jsx",
+      "resources/js/components/Sidebar.jsx"
+    ],
+    "css": [
+      "assets/app-f9296069.css"
+    ]
+  }
+}
