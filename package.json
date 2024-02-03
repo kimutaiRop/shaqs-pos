@@ -21,6 +21,8 @@
     },
     "dependencies": {
         "@inertiajs/inertia-react": "^0.8.1",
-        "date-fns": "^2.30.0"
+        "date-fns": "^2.30.0",
+        "print-js": "^1.6.0",
+        "react-to-print": "^2.14.15"
     }
 }
