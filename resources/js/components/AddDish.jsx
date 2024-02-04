@@ -4,9 +4,10 @@ import Dialog from "./Dialog";
 export const AddDish = () => {
     const [show, setShow] = React.useState(false);
     const [image, setImage] = React.useState(null);
-
+    const [addingDish, setAddingDish] = React.useState(false);
     const createDish = (e) => {
         e.preventDefault();
+        setAddingDish(true);
         const search_params = new URLSearchParams(window.location.search);
         const category_id = search_params.get("category_id");
         const formData = new FormData();
@@ -17,7 +18,10 @@ export const AddDish = () => {
         formData.append("category_id", category_id);
 
         let headers = new Headers();
-        headers.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
+        headers.append(
+            "Authorization",
+            `Bearer ${localStorage.getItem("token")}`
+        );
 
         fetch("/api/menu", {
             method: "POST",
@@ -31,6 +35,7 @@ export const AddDish = () => {
                     setShow(false);
                     // reload the page
                     window.location.reload();
+                    setAddingDish(false);
                 }, 2000);
             })
             .catch((error) => console.log("error", error));
@@ -103,8 +108,12 @@ export const AddDish = () => {
                                 ></textarea>
                             </div>
                             <div className="w-full">
-                                <button className="w-full bg-accent rounded p-2">
-                                    Add Dish
+                                <button
+                                    type="submit"
+                                    disabled={addingDish}
+                                    className="w-full bg-accent rounded p-2"
+                                >
+                                    {addingDish ? "Add Dish" : "Add Dish"}
                                 </button>
                             </div>
                         </form>
