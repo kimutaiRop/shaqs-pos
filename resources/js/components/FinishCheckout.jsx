@@ -26,8 +26,6 @@ const FinishCheckout = ({ cart, clearCart }) => {
         content: () => printRef.current,
     });
     const printReceipt = () => {
-        handlePrint();
-        return
         let conf = confirm("Are you sure you want to print this receipt?");
         if (!conf) {
             return;
@@ -56,7 +54,7 @@ const FinishCheckout = ({ cart, clearCart }) => {
             .then(async (res) => {
                 setTimeout(() => {
                     handlePrint();
-                    // clearCart();
+                    clearCart();
                 }, 1000);
             })
             .catch((err) => {

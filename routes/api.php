@@ -48,7 +48,7 @@ Route::middleware('auth:api')->delete('/users/{id}', 'App\Http\Controllers\UserC
 Route::middleware('auth:api')->get('/menu-category', 'App\Http\Controllers\MenuCategoryController@index');
 Route::middleware('auth:api')->post('/menu-category', 'App\Http\Controllers\MenuCategoryController@store');
 Route::middleware('auth:api')->put('/menu-category/{id}', 'App\Http\Controllers\MenuCategoryController@update');
-Route::middleware('auth:api')->delete('/menu-category/{id}', 'App\Http\Controllers\MenuCategoryController@destroy');
+Route::middleware('auth:api')->post('/menu-category/{id}', 'App\Http\Controllers\MenuCategoryController@destroy');
 
 #mpesa
 Route::middleware('auth:api')->post('v1/stk/push',[MpesaController::class,'customerMpesaSTKPush']);

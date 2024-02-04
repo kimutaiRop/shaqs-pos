@@ -4,11 +4,12 @@ import Dialog from "./Dialog";
 export const CreateCegory = () => {
     let cookies = document.cookie.split(";").map((cookie) => cookie.split("="));
     const [show, setShow] = React.useState(false);
+    const [creating, setCreating] = React.useState(false);
     const [image, setImage] = React.useState(null);
     const createCategory = (event) => {
         event.preventDefault();
         let name = event.target.name.value;
-
+        setCreating(true);
         let headers = new Headers();
         // headers.append("Content-Type", "multipart/form-data");
         headers.append(
@@ -31,6 +32,7 @@ export const CreateCegory = () => {
             .then((result) => {
                 setTimeout(() => {
                     setShow(false);
+                    setCreating(false);
                     // reload the page
                     window.location.reload();
                 }, 2000);
@@ -92,8 +94,14 @@ export const CreateCegory = () => {
                                 className="w-full border-2 border-black/70 rounded p-2"
                             />
                             <div className="w-full">
-                                <button className="w-full bg-accent rounded p-2">
-                                    Add Category
+                                <button
+                                    disabled={creating}
+                                    type="submit"
+                                    className="w-full bg-accent rounded p-2"
+                                >
+                                    {creating
+                                        ? "Adding Category..."
+                                        : "Add Category"}
                                 </button>
                             </div>
                         </form>
