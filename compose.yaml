@@ -12,8 +12,6 @@ services:
       - .:/var/www
     depends_on:
       - db
-    networks:
-      - dinsenstay
     ports:
       - 8000:8000
   nginx:
@@ -30,16 +28,13 @@ services:
     depends_on:
       - app
     restart: unless-stopped
-    networks:
-      - dinsenstay
+
 
   certbot:
     image: certbot/certbot:latest
     volumes:
       - ./certbot/www/:/var/www/certbot/:rw
       - ./certbot/conf/:/etc/letsencrypt/:rw
-    networks:
-      - dinsenstay
 
   db:
     image: mysql:8.0
@@ -54,17 +49,11 @@ services:
       SERVICE_NAME: mysql
     volumes:
       - ./docker-compose/mysql:/docker-entrypoint-initdb.d
-    networks:
-      - dinsenstay
+
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
-    networks:
-      - dinsenstay
 
-networks:
-  dinsenstay:
-    driver: bridge
