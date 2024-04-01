@@ -24,7 +24,12 @@ class UserSeeder extends Seeder
 
         ];
         foreach ($user as $key => $value) {
-            User::create($value);
+            // if user with email does not exist create
+            if(!User::where('email', $value['email'])->exists()){
+                User::create($value);
+            } else {
+                continue;
+            }
         }
 
     }
