@@ -14,6 +14,7 @@ services:
       - db
     ports:
       - 8000:8000
+
   nginx:
     build: ./nginx
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
@@ -28,7 +29,6 @@ services:
     depends_on:
       - app
     restart: unless-stopped
-
 
   certbot:
     image: certbot/certbot:latest
@@ -48,8 +48,7 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
-      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
-
+      - db-data:/var/lib/postgresql/data
 
   adminer:
     image: adminer
@@ -57,3 +56,5 @@ services:
     ports:
       - 8080:8080
 
+volumes:
+  db-data:
