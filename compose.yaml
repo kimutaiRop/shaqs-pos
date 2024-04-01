@@ -1,0 +1,72 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - user=myuser
+        - uid=1000
+    command: sh -c "composer clear-cache && composer install && composer update && php artisan migrate && php artisan serve --host=0.0.0.0 --port=8000"
+    volumes:
+      - .:/var/www
+    depends_on:
+      - db
+    networks:
+      - dinsenstay
+    ports:
+      - 8000:8000
+  nginx:
+    build: ./nginx
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/:/etc/nginx/conf.d/:ro
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
+    depends_on:
+      - app
+    restart: unless-stopped
+    networks:
+      - dinsenstay
+
+  certbot:
+    # entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    image: certbot/certbot:latest
+    # command: certonly --webroot --webroot-path=/var/www/certbot/ --email ${EMAIL} --agree-tos --no-eff-email --staging -d ${DOMAIN}
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
+    networks:
+      - dinsenstay
+
+  db:
+    image: mysql:8.0
+    container_name: dinsenstay-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - dinsenstay
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - dinsenstay
+
+networks:
+  dinsenstay:
+    driver: bridge
